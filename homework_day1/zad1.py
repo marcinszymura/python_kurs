@@ -12,3 +12,10 @@
 # ile kosztuje kilo bananów i ile kilo bananów chce kupić.
 # Niech program policzy i wyświetli, ile trzeba będzie zapłacić za te ziemniaki i banany razem.
 # I niech program sprawdzi i powie, za co trzeba będzie zapłacić więcej - za banany czy za ziemniaki.
+
+
+cena_za_kilo = float(input('podaj cene za kilo: '))
+ilosc = float(input('podaj ilosc do zakupu:'))
+
+print(f'cena za kilo = {cena_za_kilo} a cena za 5kg = {cena_za_kilo * 5}')
+print(f'cena za kilo = {cena_za_kilo} a cena za 5kg = {cena_za_kilo * ilosc}')
