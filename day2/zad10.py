@@ -1,0 +1,14 @@
+number_1 = int(input('Podaj pierwsza liczbe: '))
+number_2 = int(input('Podaj druga liczbe: '))
+action = input('Podaj rodzaj operacji: ')
+
+if action == '+':
+    print(f'Wynik: {number_1 + number_2}')
+elif action == '-':
+    print(f'Wynik: {number_1 - number_2}')
+elif action == '*':
+    print(f'Wynik: {number_1 * number_2}')
+elif action == '/':
+    print(f'Wynik: {number_1 / number_2}')
+else:
+    print('nieznane dzialanie')
