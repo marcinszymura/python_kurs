@@ -1,4 +1,4 @@
-data = [2, 5, 7, 8, -1, -3, -100, 0]
+data = [2, 5, 7, 8, -1, -3, -100, 0, 0, 0, 0, -9]
 higher = 0
 smaller = 0
 _zero = 0
@@ -11,4 +11,13 @@ for x in data:
     else:
         _zero += 1
 
-print(f'> 0 = {higher}, < 0 = {smaller}, liczba 0 = {_zero}')
+print(f"""
+> 0 = {higher}
+< 0 = {smaller}
+= 0 = {_zero}""")
+
+
+
+
+
+
