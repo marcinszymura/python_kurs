@@ -1,0 +1,5 @@
+liczba = int(input("Podaj liczbe: "))
+print()
+print(f"Podzielna przez 2: {liczba % 2 == 0}")
+print(f"Podzielna przez 3: {liczba % 3 == 0}")
+print(f"Wieksza od 10 lub rowna 7: {(liczba > 10) or (liczba == 7)}")
