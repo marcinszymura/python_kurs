@@ -11,4 +11,4 @@ elif action == '*':
 elif action == '/':
     print(f'Wynik: {number_1 / number_2}')
 else:
-    print('nieznane dzialanie')
+    print(f'{action} nieznane dzialanie')
