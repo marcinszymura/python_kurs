@@ -9,6 +9,9 @@ elif action == '-':
 elif action == '*':
     print(f'Wynik: {number_1 * number_2}')
 elif action == '/':
-    print(f'Wynik: {number_1 / number_2}')
+    if number_2 == 0:
+        print('devision by zero')
+    else:
+        print(f'Wynik: {number_1 / number_2}')
 else:
     print(f'{action} nieznane dzialanie')
