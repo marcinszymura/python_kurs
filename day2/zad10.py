@@ -8,10 +8,7 @@ elif action == '-':
     print(f'Wynik: {number_1 - number_2}')
 elif action == '*':
     print(f'Wynik: {number_1 * number_2}')
-elif action == '/':
-    if number_2 == 0:
-        print('devision by zero')
-    else:
-        print(f'Wynik: {number_1 / number_2}')
+elif action == '/' and number_2 != 0:
+    print(f'Wynik: {number_1 / number_2}')
 else:
-    print(f'{action} nieznane dzialanie')
+    print(f'{action} nieznane dzialanie lub dzielenie przez 0')
