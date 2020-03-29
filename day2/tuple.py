@@ -20,3 +20,8 @@ print(y[2:7])
 print(y[::3])
 # print co drugi element od końca
 print(y[::-2])
+
+for i in y:
+    print(i)
+
+print(tuple('123456'))
