@@ -23,3 +23,12 @@ def sort(lista):
 
 print(sort(lista))
 
+# zad4
+
+zrodla = {"a": 10, "b":30}
+
+for nazwa, wartosc in zrodla.items():
+   print(f" nazwa: {nazwa}, wartość: {wartosc}")
+
+# odnosnie C pewnie chodzi o uzycie get ale nie mam pomysłu na przykład :-)
+# zrodla[c] = zrodla.get(c, 0)
