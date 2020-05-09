@@ -32,3 +32,13 @@ for nazwa, wartosc in zrodla.items():
 
 # odnosnie C pewnie chodzi o uzycie get ale nie mam pomysłu na przykład :-)
 # zrodla[c] = zrodla.get(c, 0)
+
+# 5. Zdefiniuj funkcję foo ...
+
+def foo(*args, **kwargs):
+    pozycyjnych = len(args)
+    kluczowych = len(kwargs)
+    return pozycyjnych, kluczowych
+
+pozycyjnych, kluczowych = foo(10, 20, a=1, b=2, c=3)
+print(f'pozycyjnych: {pozycyjnych}' '\n' f'kluczowych: {kluczowych}')
