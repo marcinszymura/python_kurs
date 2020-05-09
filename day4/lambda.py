@@ -6,11 +6,6 @@ y = 'Jan Nowak'
 print(y.split()[1])
 
 
-
-
-
-
-
 def silnia(n):
     if n == 0:
         return 1
@@ -28,8 +23,6 @@ def test_silnia():
     silnia(1) == 1
     silnia(2) == 4
     silnia(-1) == 'error'
-
-
 
 
 def recu_print(text):
