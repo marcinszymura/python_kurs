@@ -124,7 +124,7 @@ class Zolw:
         self.kurs = kurs
 
     def __str__(self):
-        return f'x={self.x} y={self.y} kurs={self.kurs}'
+        return f'x={self.x} y={self.y}'
 
     def idz(self, dystans: int):
         if self.kurs == 0:
@@ -165,3 +165,56 @@ class TestZolw:
     def test_idz(self):
         z = Zolw(100, 100)
         z.idz(50)
+        assert str(z) == 'x=100 y=50'
+        z.obroc_sie(90)
+        z.idz(50)
+        assert str(z) == 'x=150 y=50'
+        z.obroc_sie(180)
+        z.idz(50)
+        assert str(z) == 'x=150 y=100'
+
+
+### Zadanie 4.6 | Kółko i krzyżyk
+print('*' * 100)
+
+class PlanszaXO:
+    def __init__(self):
+        self.x = None
+        self.y = None
+        self.rodzaj_elementu = ''
+        self.ruchy = ['11', '12', '13', '21', '22', '23', '31', '32', '33']
+
+    def __str__(self):
+        return self.desc()
+
+    def desc(self):
+        desc = f'{self.ruchy[2]}|{self.ruchy[5]}|{self.ruchy[8]}\n' \
+               f'{self.ruchy[1]}|{self.ruchy[4]}|{self.ruchy[7]}\n' \
+               f'{self.ruchy[0]}|{self.ruchy[3]}|{self.ruchy[6]}'
+        return ''.join([i for i in desc if not i.isdigit()])
+
+    def dodaj_element(self, x: int, y: int, rodzaj_elementu: str):
+        self.x = x
+        self.y = y
+        ruch = str(self.x) + str(self.y)
+        print(ruch, rodzaj_elementu)
+        if ruch in self.ruchy:
+            tmp_index = self.ruchy.index(ruch)
+            self.ruchy[tmp_index] = rodzaj_elementu
+        else:
+            return False
+        return self.ruchy
+
+    # 13|23|33
+    # 12|22|32
+    # 11|21|31
+
+
+gra = PlanszaXO()
+print(gra)
+print(gra.dodaj_element(1, 3, 'o'))
+print(gra.dodaj_element(1, 1, 'x'))
+print(gra.dodaj_element(2, 2, 'x'))
+print(gra.dodaj_element(3, 3, 'x'))
+print(gra.dodaj_element(2, 3, 'x'))
+print(gra)
