@@ -31,17 +31,6 @@ class Train:
         return self.speed, self.fuel_amount
 
 
-train1 = Train(10, 1000)
-train1.acceleration(5)
-print(train1)
-train1.acceleration(20)
-print(train1)
-train1.acceleration(8)
-print(train1)
-train1.acceleration(10)
-print(train1)
-
-
 class TestTrain:
     def test_acceleration(self):
         train1 = Train(10, 1000)
@@ -56,14 +45,15 @@ class TestTrain:
         assert train1.desc() == 'Moja predkość to 33. Mam jeszcze 996.0 litrów paliwa.'
 
 
-
 ### Zadanie 4.4 | Zbiornik
 print('*' * 100)
+
 
 class Zbiornik:
     def __init__(self, ilosc_wody: float, tempertaura: float):
         self.ilosc_wody = ilosc_wody
         self.tempertaura = tempertaura
+
     def __str__(self):
         return self.desc()
 
@@ -79,7 +69,7 @@ class Zbiornik:
         temperatura_przed_dolaniem = self.tempertaura
         ilosc_wody_przed_dolaniem = self.ilosc_wody
         self.ilosc_wody += ile
-        self.tempertaura = (ilosc_wody_przed_dolaniem * temperatura_przed_dolaniem + ile * temperatura)\
+        self.tempertaura = (ilosc_wody_przed_dolaniem * temperatura_przed_dolaniem + ile * temperatura) \
                            / self.ilosc_wody
         return self.ilosc_wody, self.tempertaura
 
@@ -95,10 +85,6 @@ class Zbiornik:
             self.ilosc_wody -= ile
 
         return self.ilosc_wody
-
-zb = Zbiornik(10, 1)
-zb.dolej(2, 5)
-print(zb)
 
 
 class TestZbiornik:
@@ -117,8 +103,9 @@ class TestZbiornik:
 ### Zadanie 4.5 | Żółw
 print('*' * 100)
 
+
 class Zolw:
-    def __init__(self, x: int, y: int, kurs=0):
+    def __init__(self, x: int, y: int, kurs: str = 0):
         self.x = x
         self.y = y
         self.kurs = kurs
@@ -131,7 +118,7 @@ class Zolw:
             self.y -= dystans
         elif self.kurs == 90:
             self.x += dystans
-        elif self.kurs ==180:
+        elif self.kurs == 180:
             self.y += dystans
         elif self.kurs == 270:
             self.x -= dystans
@@ -144,16 +131,6 @@ class Zolw:
         self.kurs = kurs
         return self.kurs
 
-
-z = Zolw(100, 100)
-z.idz(50)
-print(z)
-z.obroc_sie(90)
-z.idz(50)
-print(z)
-z.obroc_sie(180)
-z.idz(50)
-print(z)
 
 class TestZolw:
     def test_obroc_sie(self):
@@ -172,5 +149,3 @@ class TestZolw:
         z.obroc_sie(180)
         z.idz(50)
         assert str(z) == 'x=150 y=100'
-
-
