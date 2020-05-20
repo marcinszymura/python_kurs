@@ -15,7 +15,7 @@ class Train:
     def __str__(self) -> str:
         return self.desc()
 
-    def acceleration(self, increase_speed: int) -> (int, float):
+    def accelerate(self, increase_speed: int) -> (int, float):
         """
         Metoda do zwiększania prędkości pociągu
 
@@ -35,13 +35,13 @@ class TestTrain:
     def test_acceleration(self):
         train1 = Train(10, 1000)
         assert train1
-        train1.acceleration(5)
+        train1.accelerate(5)
         assert train1.desc() == 'Moja predkość to 15. Mam jeszcze 999.5 litrów paliwa.'
-        train1.acceleration(20)
+        train1.accelerate(20)
         assert train1.desc() == 'Moja predkość to 15. Mam jeszcze 999.5 litrów paliwa.'
-        train1.acceleration(8)
+        train1.accelerate(8)
         assert train1.desc() == 'Moja predkość to 23. Mam jeszcze 998.3 litrów paliwa.'
-        train1.acceleration(10)
+        train1.accelerate(10)
         assert train1.desc() == 'Moja predkość to 33. Mam jeszcze 996.0 litrów paliwa.'
 
 
@@ -50,9 +50,9 @@ print('*' * 100)
 
 
 class Zbiornik:
-    def __init__(self, ilosc_wody: float, tempertaura: float):
+    def __init__(self, ilosc_wody: float, temperatura: float):
         self.ilosc_wody = ilosc_wody
-        self.tempertaura = tempertaura
+        self.temperatura = temperatura
 
     def __str__(self):
         return self.desc()
