@@ -10,30 +10,30 @@ class PlanszaXO:
         self.ruchy = ['11', '12', '13', '21', '22', '23', '31', '32', '33']
         self.zwyciestwa = \
             [
-            [self.ruchy[2], self.ruchy[5] ,self.ruchy[8]],
-            [self.ruchy[1], self.ruchy[4], self.ruchy[7]],
-            [self.ruchy[0], self.ruchy[3], self.ruchy[6]],
-            [self.ruchy[2], self.ruchy[1], self.ruchy[0]],
-            [self.ruchy[5], self.ruchy[4], self.ruchy[3]],
-            [self.ruchy[8], self.ruchy[7], self.ruchy[6]],
-            [self.ruchy[2], self.ruchy[4] ,self.ruchy[6]],
-            [self.ruchy[0], self.ruchy[4], self.ruchy[8]]
+                [self.ruchy[2], self.ruchy[5], self.ruchy[8]],
+                [self.ruchy[1], self.ruchy[4], self.ruchy[7]],
+                [self.ruchy[0], self.ruchy[3], self.ruchy[6]],
+                [self.ruchy[2], self.ruchy[1], self.ruchy[0]],
+                [self.ruchy[5], self.ruchy[4], self.ruchy[3]],
+                [self.ruchy[8], self.ruchy[7], self.ruchy[6]],
+                [self.ruchy[2], self.ruchy[4], self.ruchy[6]],
+                [self.ruchy[0], self.ruchy[4], self.ruchy[8]]
             ]
 
     def __str__(self):
         return self.desc()
 
-    def desc(self):
+    def desc(self) -> str:
         desc = f'{self.ruchy[2]}|{self.ruchy[5]}|{self.ruchy[8]}\n' \
                f'{self.ruchy[1]}|{self.ruchy[4]}|{self.ruchy[7]}\n' \
                f'{self.ruchy[0]}|{self.ruchy[3]}|{self.ruchy[6]}'
         return desc
 
-    def kto_zaczyna(self):
+    def kto_zaczyna(self) -> str:
         self.rodzaj_elementu = random.choice(['o', 'x'])
         return self.rodzaj_elementu
 
-    def dodaj_element(self, x: int, y: int):
+    def dodaj_element(self, x: int, y: int) -> bool:
         self.x = x
         self.y = y
         ruch = str(self.x) + str(self.y)
@@ -47,20 +47,21 @@ class PlanszaXO:
             if ruch in kombinacja:
                 tmp_index2 = kombinacja.index(ruch)
                 kombinacja[tmp_index2] = self.rodzaj_elementu
-        return self.ruchy, self.zwyciestwa
 
-    def stan_gry(self):
+    @property
+    def stan_gry(self) -> str:
         for kombinacja in self.zwyciestwa:
             if kombinacja.count('x') == 3:
                 return 'gra zakończona, sukces krzyżyków'
             elif kombinacja.count('o') == 3:
                 return 'gra zakończona, sukces kółek'
         if self.ruchy.count('o ') + self.ruchy.count('x ') < len(self.ruchy):
-           return 'gra trwa'
+            return 'gra trwa'
         else:
             return 'koniec gry, brak zwycięzcy'
 
-    def czyj_ruch(self):
+    @property
+    def czyj_ruch(self) -> str:
         if self.rodzaj_elementu == 'o':
             self.rodzaj_elementu = 'x'
         else:
@@ -78,7 +79,7 @@ while True:
         print(f'ruch {str(x) + str(y)} został już wykorzystany')
         x, y = input('podaj nowe współrzędne xy:')
     print(gra)
-    print(gra.stan_gry())
-    if 'sukces' in gra.stan_gry() or 'koniec' in gra.stan_gry():
+    print(gra.stan_gry)
+    if 'sukces' in gra.stan_gry or 'koniec' in gra.stan_gry:
         exit()
-    print(f'ruch dla: {PlanszaXO.czyj_ruch(gra)}')
+    print(f'ruch dla: {gra.czyj_ruch}')
