@@ -16,7 +16,7 @@ def policz_ile(plik_txt: str, slowo: str) ->str:
     :param slowo: słowo do wyszukania
     :return:
     """
-    with open(plik_txt, 'r') as plik:
+    with open(plik_txt, 'r', encoding="utf8") as plik:
         w = plik.read()
     return f'słowo "{slowo}" wystąpiło {w.count(slowo)} w pliku {plik_txt}'
 
@@ -38,7 +38,7 @@ import re
 
 
 def policz_slowa(plik_txt: str) -> str:
-    with open(plik_txt, 'r') as plik:
+    with open(plik_txt, 'r', encoding="utf8") as plik:
         c = 1
         counter = dict()
         while True:
@@ -73,10 +73,12 @@ policz_slowa('pan-tadeusz.txt')
 # 3. (trudniejsze) dla wszystkich krajów oblicza ilu jest zawodników z tego kraju; tzn. ma się wypisać,
 # być może w innej kolejności:
 
+
+
 import csv
 
 
-with open('zawodnicy.csv', 'r', newline='') as plik_csv:
+with open('zawodnicy.csv', 'r', newline='', encoding="utf8") as plik_csv:
     read_csv = csv.reader(plik_csv, delimiter=';')
     zawodnicy = []
     waga = []
@@ -106,13 +108,18 @@ print(f'najniższy: {list(row[0] + " " + row[1] for row in zawodnicy if row[4] =
 # print(f'waga wszystkich {kraj_z}: {sum(list(int(row[5]) for row in zawodnicy if row[2] == kraj_z))}')
 
 # 3
-for kraj, liczba in sorted(lista_z.items(), key=lambda kv: kv[1], reverse=True):
+for kraj, liczba in sorted(lista_z.items(), key=lambda item: item[1], reverse=True):
     print(f'{kraj} - {liczba}')
 
 # 4
-for lista in lista_wz:
 
-    print(lista[0], lista[1])
+print(lista_wz)
+test = len(list(filter(lambda a: a[0] == 'POL', lista_wz)))
+test1 = sum(list(filter(lambda i: int(i[1]) if i[0] == 'POL' else None, lista_wz)))
+print(test)
+print(test1)
+
+
 
 
 # print(sl_sr_wz)
