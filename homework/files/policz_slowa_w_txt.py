@@ -1,27 +1,26 @@
 class ReadFiles:
-    def __init__(self, _file: str, txt_openmode=None):
+    def __init__(self, _file: str, txt_open_mode=None):
         self._file = _file
-        self.txt_openmode = txt_openmode
-        self.opened_file = ''
-
+        self.txt_open_mode = txt_open_mode
+        self.opened_file = None
 
     @property
     def open_txt_file_read(self):
         """
-        Method to open txt file in read mode
+        Method to open txt file in read or readlines mode
         :return:
         """
         with open(self._file, 'r', encoding='utf8') as opened_file:
-            if self.txt_openmode == 'readlines':
+            if self.txt_open_mode == 'readlines':
                 self.opened_file = opened_file.readlines()
             else:
-                self.txt_opened_file = opened_file.read()
+                self.opened_file = opened_file.read()
             return self.opened_file
 
     @property
     def open_csv_file_read(self):
         """
-
+        Method to open CSV file
         :return:
         """
         import csv
@@ -31,29 +30,38 @@ class ReadFiles:
         return self.opened_file
 
     def close_csv_file(self):
-        close(self._file)
+        self.opened_file.close()
+
 
 class ReadTxtFiles(ReadFiles):
-    def __init__(self, _file: str, word=None, txt_openmode='None'):
+    def __init__(self, _file: str, search_word=None, txt_open_mode='None'):
         super().__init__(self, _file)
         self._file = _file
-        self.word = word
-        self.txt_openmode = txt_openmode
+        self.word = search_word
+        self.txt_open_mode = txt_open_mode
         self.all_words_counter_dict = dict()
 
     def word_counter(self):
+        """
+        method to count word in txt file
+        :return:
+        """
         read_txt_file = super().open_txt_file_read
         return f'słowo "{self.word}" wystąpiło {read_txt_file.count(self.word)} w pliku {self._file}'
 
     @property
     def all_words_counter(self) -> dict:
+        """
+        methon to count aall words in txt file
+        :return:
+        """
         import re
 
         lines = super().open_txt_file_read
         for line in lines:
-            for word in line.split(" "):
-                word = re.sub(r"\W", "", word)
-                self.all_words_counter_dict[word] = self.all_words_counter_dict.get(word, 0) + 1
+            for tmp_word in line.split(" "):
+                tmp_word = re.sub(r"\W", "", tmp_word)
+                self.all_words_counter_dict[tmp_word] = self.all_words_counter_dict.get(tmp_word, 0) + 1
         return self.all_words_counter_dict
 
 
@@ -61,106 +69,95 @@ class ReadCsvFile(ReadFiles):
     def __init__(self, _file: str):
         super().__init__(self, _file)
         self._file = _file
-        self.zawodnicy = []
-        self.waga = []
-        self.wzrost = []
-        self.zb_kraje = set()
+        self.jumpers = []
+        self.weight = []
+        self.growth = []
+        self.collection_of_countries = set()
         self.sl_z = dict()
         self.sl_sr_wz = dict()
         self.lista_wz = []
 
-
-
     def prepare_data(self):
+        """
+        method to prepare data form csv file
+        :return:
+        """
         read_csv = super().open_csv_file_read
         for row in read_csv:
-            self.zawodnicy.append(row)
-            self.waga.append(row[5])
-            self.wzrost.append(row[4])
-            self.zb_kraje.add(row[2])
+            self.jumpers.append(row)
+            self.weight.append(row[5])
+            self.growth.append(row[4])
+            self.collection_of_countries.add(row[2])
             self.sl_z[row[2]] = self.sl_z.get(row[2], 0) + 1
             tmp_wz = [row[2], row[4]]
             self.lista_wz.append(tmp_wz)
 
     @property
-    def waga(self):
-        print(f'najlżejszy: {list(row[0] + " " + row[1] for row in self.zawodnicy if row[5] == min(self.waga))}')
-        print(f'najcięższy: {list(row[0] + " " + row[1] for row in self.zawodnicy if row[5] == max(self.waga))}')
-        print(f'najwyższy: {list(row[0] + " " + row[1] for row in self.zawodnicy if row[4] == max(self.wzrost))}')
-        print(f'najniższy: {list(row[0] + " " + row[1] for row in self.zawodnicy if row[4] == min(self.wzrost))}')
+    def waga_sk_min_max(self):
+        """
 
+        :return:
+        """
+        return (
+            f'najlżejszy: {list(row[0] + " " + row[1] for row in self.jumpers if row[5] == min(self.weight))}\n'
+            f'najcięższy: {list(row[0] + " " + row[1] for row in self.jumpers if row[5] == max(self.weight))}\n'
+            f'najwyższy: {list(row[0] + " " + row[1] for row in self.jumpers if row[4] == max(self.growth))}\n'
+            f'najniższy: {list(row[0] + " " + row[1] for row in self.jumpers if row[4] == min(self.growth))}'
+            )
 
+    def waga_kraj(self):
+        """
+
+        :return:
+        """
+        selected_country = input(f'podaj kraj: {self.collection_of_countries}:')
+        return f'waga wszystkich {selected_country}: ' \
+               f'{sum(list(int(row[5]) for row in self.jumpers if row[2] == selected_country))}'
+
+    @property
+    def kraj_ilu_zw(self) -> list:
+        """
+
+        :return:
+        """
+        result = list()
+        for country, counter in sorted(self.sl_z.items(), key=lambda item: item[1], reverse=True):
+            tmp_item = [country, counter]
+            result.append(tmp_item)
+        return result
+
+    @property
+    def kraj_ilu_zw_sr_waga(self) -> list:
+        """
+
+        :return:
+        """
+        result = []
+        for country in self.collection_of_countries:
+            tmp_item = [country,
+                        len((list(filter(lambda item: item[0] == country, self.lista_wz)))),
+                        sum(int(t[1]) for t in self.lista_wz if t[0] == country) /
+                        len((list(filter(lambda item: item[0] == country, self.lista_wz))))]
+            result.append(tmp_item)
+        return result
 
 
 # Pan Tadeusz
-a = ReadTxtFiles('pan-tadeusz.txt', 'Tadeusz', txt_openmode='read')
+a = ReadTxtFiles('pan-tadeusz.txt', 'Tadeusz', txt_open_mode='read')
 print(a.word_counter())
 
-b = ReadTxtFiles('pan-tadeusz.txt', txt_openmode='readlines')
-for word, count in sorted(b.all_words_counter.items(), key=lambda item: item[1], reverse=True):
-    print(f'{word} -> {count}')
+b = ReadTxtFiles('pan-tadeusz.txt', txt_open_mode='readlines')
+for word, count in sorted(b.all_words_counter.items(), key=lambda item: item[0], reverse=False):
+    print(f'{word:15} -> {count:^4} -> {len(word):^4}')
 
-#zawodnicy
+# zawodnicy
 c = ReadCsvFile('zawodnicy.csv')
 c.prepare_data()
-print(c.waga)
+print(c.waga_sk_min_max)
+print(c.waga_kraj())
 
+for kraj, liczba_zw in c.kraj_ilu_zw:
+    print(f'{kraj} - {liczba_zw}')
 
-
-# # ## 6. Przetwarzanie plików
-# # ​
-# # ### Zadanie 6.1 | Dane skoczków narciarskich (3 godz.)
-# # ​
-# # Plik CSV z danymi: http://pgradzinski.students.alx.pl/kpython/zawodnicy.csv
-# # ​
-# # Korzystając z pliku CSV z danymi skoczków narciarskich napisz programy, które wczytują ten plik i:
-# # ​
-# # 1. wypisuje najwyższego, najwyższego, najcięższego i najlżejszego skoczka;
-# # gdyby kilku miało taką samą wagę lub wzrost, to wystarczy wypisać jednego z nich.
-# # 2. liczy ile łącznie ważą reprezentanci Polski (np. żeby sprawdzić czy zmieszczą się w windzie na skocznię ;)).
-# # Pozwól użytkownikowi podać kraj (niekoniecznie musi być Polska).
-# # 3. (trudniejsze) dla wszystkich krajów oblicza ilu jest zawodników z tego kraju; tzn. ma się wypisać,
-# # być może w innej kolejności:
-#
-#
-# #
-# import csv
-#
-#
-# with open('zawodnicy.csv', 'r', newline='', encoding="utf8") as plik_csv:
-#     read_csv = csv.reader(plik_csv, delimiter=';')
-#     zawodnicy = []
-#     waga = []
-#     wzrost = []
-#     zb_kraje = set()
-#     sl_z = dict()
-#     sl_sr_wz = dict()
-#     lista_wz = []
-#     for row in read_csv:
-#         zawodnicy.append(row)
-#         waga.append(row[5])
-#         wzrost.append(row[4])
-#         zb_kraje.add(row[2])
-#         sl_z[row[2]] = sl_z.get(row[2], 0) + 1
-#         tmp_wz = [row[2], row[4]]
-#         lista_wz.append(tmp_wz)
-# # 1
-# print(f'najlżejszy: {list(row[0] + " " + row[1] for row in zawodnicy if row[5] == min(waga))}')
-# print(f'najcięższy: {list(row[0] + " " + row[1] for row in zawodnicy if row[5] == max(waga))}')
-# print(f'najwyższy: {list(row[0] + " " + row[1] for row in zawodnicy if row[4] == max(wzrost))}')
-# print(f'najniższy: {list(row[0] + " " + row[1] for row in zawodnicy if row[4] == min(wzrost))}')
-#
-# # 2
-# kraj_z = input(f'podaj kraj: {zb_kraje}:')
-# print(f'waga wszystkich {kraj_z}: {sum(list(int(row[5]) for row in zawodnicy if row[2] == kraj_z))}')
-#
-# # 3
-# for _kraj, liczba in sorted(sl_z.items(), key=lambda item: item[1], reverse=True):
-#     print(f'{_kraj} - {liczba}')
-#
-# # 4
-# for kraj in zb_kraje:
-#     print(kraj, '-',
-#           len((list(filter(lambda item: item[0] == kraj, lista_wz)))), '-',
-#           f'{sum(int(t[1]) for t in lista_wz if t[0] == kraj) / len((list(filter(lambda item: item[0] == kraj, lista_wz)))):.2f}')
-#
+for kraj, liczba_zw, se_waga in c.kraj_ilu_zw_sr_waga:
+    print(f'{kraj} - {liczba_zw} - {se_waga:.2f}')
