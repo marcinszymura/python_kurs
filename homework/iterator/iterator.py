@@ -15,7 +15,7 @@ class Vowels:
         self.counter = 0
         return self
 
-    def __next__(self):
+    def __next__(self) -> str:
         if self.counter >= len(self.sentence):
             raise StopIteration
         for i in self.sentence:
