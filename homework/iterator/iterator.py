@@ -24,3 +24,5 @@ class Vowels:
 for char in Vowels('ala ma kota a kot ma ale'):
     print(char)
 
+# Piotrze, traz zwraca None jak jest nie samogłoska, mogę zamieniac na " " ale dalej bedzie wyświetlany znak.
+# brak pomysłu ...
