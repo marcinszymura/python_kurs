@@ -52,7 +52,7 @@ class ReadTxtFiles(ReadFiles):
     @property
     def all_words_counter(self) -> dict:
         """
-        methon to count aall words in txt file
+        method to count all words in txt file
         :return:
         """
         import re
