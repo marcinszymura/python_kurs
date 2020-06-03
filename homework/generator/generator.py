@@ -4,11 +4,12 @@ def vowels(sentence: str) -> str:
     :param sentence:
     :return:
     """
-    vowels = ['a', 'ą', 'e', 'ę', 'i', 'o', 'u', 'y', ' ']
+    vowels = ['a', 'ą', 'e', 'ę', 'i', 'o', 'u', 'y']
     for i in sentence:
         if i not in vowels:
-            sentence = sentence.replace(i, '')
-    yield sentence
+            continue
+        else:
+            yield i
 
 
 for char in vowels('ala ma kota a kot ma ale'):
