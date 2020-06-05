@@ -17,12 +17,13 @@ class Vowels:
         if self.counter >= len(self.sentence):
             raise StopIteration
         tmp = self.sentence[self.counter]
-        self.counter += 1
-        if tmp in self.vowels:
-            return tmp
+        while tmp not in self.vowels:
+            self.counter += 1
+            tmp = self.sentence[self.counter]
+        else:
+            self.counter += 1
+        return tmp
+
 
 for char in Vowels('ala ma kota a kot ma ale'):
     print(char)
-
-# Piotrze, traz zwraca None jak jest nie samogłoska, mogę zamieniac na " " ale dalej bedzie wyświetlany znak.
-# brak pomysłu ...
