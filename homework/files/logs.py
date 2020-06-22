@@ -43,6 +43,5 @@ with open('logs.txt', 'r', newline='', encoding="utf8") as opened_file:
         else:
             working_time[a[0]] = working_time.get(a[0], 0) + (int(a[2]) - int(tmp_login[a[0]]))
 
-
-for i, v in working_time.items():
-    print(f'- {i}:  {v} s.')
+for i, v in sorted(working_time.items(), key=lambda item: item[1], reverse=False):
+    print(f'- {i:^10}:  {v} s.')

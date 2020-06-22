@@ -1,0 +1,14 @@
+{# blog/templates/blog/homepage.html #}
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <h2>Lista wpisów</h2>
+
+    {% for post in posts %}
+        <div>
+            <a href="{% url 'post_show' post.slug%}">{{ post.title }}, {{post.created_at|date:'Y-m-d H:i:s'}}</a>
+        </div>
+    {% endfor %}
+
+{% endblock %}
